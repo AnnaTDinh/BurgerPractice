@@ -1,3 +1,5 @@
+// this file is run with npm run build
+// it uses babel to compile everything in client/src into bundle.js
 const path = require('path');
 
 module.exports = {
@@ -12,14 +14,31 @@ module.exports = {
       {
         loader: 'babel-loader',
         test: /\.js[x]?/,
-        exclude: /node_modules/,
+        exclude: '/node_modules/',
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
         },
       },
+      // {
+      //   test: /\.css$/,
+      //   use: ['style-loader', 'css-loader'],
+      // },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true
+            }
+          }
+        ]
+      }
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
-  },
+    extensions: ['*', '.js', '.jsx'],
+  }
 };
